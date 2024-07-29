@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Contract;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SimCardSimCardGroup>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SimCardGroup>
  */
-class SimCardSimCardGroupFactory extends Factory
+class SimCardGroupFactory extends Factory
 {
 	/**
 	 * Define the model's default state.
@@ -17,7 +18,8 @@ class SimCardSimCardGroupFactory extends Factory
 	public function definition(): array
 	{
 		return [
-			//
+			'name' => $this->faker->word(50),
+			'contract_id' => Contract::factory(),
 		];
 	}
 }

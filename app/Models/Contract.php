@@ -22,7 +22,7 @@ class Contract extends Model
 
 	public function simCardGroups()
 	{
-		$this->hasMany(SimCardsGroup::class, 'sim_card_group_id');
+		$this->hasMany(SimCardGroup::class, 'sim_card_group_id');
 	}
 
 	public function users()

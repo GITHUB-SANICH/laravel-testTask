@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Contract;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SimCard>
@@ -18,7 +19,7 @@ class SimCardFactory extends Factory
 	{
 		return [
 			'number' => $this->faker->phoneNumber(),
-			//'contract_id' => Contract::factory(),
+			'contract_id' => Contract::factory()
 		];
-	}
+	} 
 }

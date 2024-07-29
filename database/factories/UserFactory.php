@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Contract;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -29,7 +30,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-			//'contract_id' => Contract::factory(),
+			'role' => fake()->randomElement(['client', 'admin']),
+			'contract_id' => Contract::factory(),
         ];
     }
 

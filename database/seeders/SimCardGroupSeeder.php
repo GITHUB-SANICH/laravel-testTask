@@ -13,6 +13,6 @@ class SimCardGroupSeeder extends Seeder
 	 */
 	public function run(): void
 	{
-		SimCardGroup::factory()->count(20)->create();
+		SimCardGroup::factory()->count(10)->create();
 	}
 }

@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
 			'role' => fake()->randomElement(['client', 'admin']),
-			'contract_id' => Contract::factory(),
+			'contract_id' => mt_rand(1, 10)
         ];
     }
 

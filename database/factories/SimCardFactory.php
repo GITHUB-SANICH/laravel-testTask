@@ -19,7 +19,7 @@ class SimCardFactory extends Factory
 	{
 		return [
 			'number' => $this->faker->phoneNumber(),
-			'contract_id' => Contract::factory()
+			'contract_id' => mt_rand(1, 10)
 		];
 	} 
 }

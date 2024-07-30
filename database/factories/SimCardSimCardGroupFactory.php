@@ -19,8 +19,8 @@ class SimCardSimCardGroupFactory extends Factory
 	public function definition(): array
 	{
 		return [
-			'sim_card_id' => SimCard::factory(),
-			'sim_card_group_id' => SimCardGroup::factory()
+			'sim_card_id' => mt_rand(1, 20),
+			'sim_card_group_id' => mt_rand(1, 10)
 		];
 	}
 }

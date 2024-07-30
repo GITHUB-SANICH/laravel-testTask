@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SimCardGroup extends Model
 {
-	use HasFactory;
+	use HasFactory, SoftDeletes;
 
 	protected $table = 'sim_card_groups';
 
@@ -15,13 +16,13 @@ class SimCardGroup extends Model
 		'name', 'contract_id'
 	];
 
-	public function contracts()
+	public function contract()
 	{
 		return $this->belongTo(Contract::class, 'contract_id');
 	}
 
 	public function simCards()
 	{
-		return $this->belongsToMany(SimCard::class, 'sim_card_sim_card_group');
+		return $this->belongsToMany(SimCard::class, 'sim_card_id');
 	}
 }

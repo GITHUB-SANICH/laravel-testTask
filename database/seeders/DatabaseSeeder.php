@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
 			ContractSeeder::class,
 			SimCardSeeder::class,
 			SimCardGroupSeeder::class,
-			UserSeeder::class
+			UserSeeder::class,
+			SimCardGroupSeeder::class
 		]);
     }
 }

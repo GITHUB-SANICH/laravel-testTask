@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
 	{
 		$this->call([
 			ContractSeeder::class,
+			UserSeeder::class,
 			SimCardSeeder::class,
 			SimCardGroupSeeder::class,
-			UserSeeder::class,
-			SimCardGroupSeeder::class
+			SimCardSimCardGroupSeeder::class,
 		]);
     }
 }

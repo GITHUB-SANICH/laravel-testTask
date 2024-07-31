@@ -32,7 +32,6 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
 			'role' => $role,
 			'contract_id' => $role === 'client' ? mt_rand(1, 10) : null
-			//'contract_id' => $role === 'client' ? mt_rand(1, 10) : null
         ];
     }
 

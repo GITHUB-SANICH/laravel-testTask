@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\SimCard;
+use App\Http\Controllers\Api\V1\ContractController;
+use App\Http\Controllers\Api\V1\SimCardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-	Route::get('/sim-cards', [SimCard::class, 'index']);
-	Route::get('/sim-cards', [SimCard::class, 'getSimCardsForSimCardGroup']);
-	Route::get('/sim-cards', [SimCard::class, 'index'])->middleware('role:admin');
-	Route::get('/sim-cards', [SimCard::class, 'getSimCardForContracts'])->middleware('role:admin');
-	Route::post('/sim-cards', [SimCard::class, 'getSimCardForContracts'])->middleware('role:admin');
+	Route::get('/sim-cards', [SimCardController::class, 'index']);
+	Route::middleware('role:admin')->group(function () {
+		Route::get('/contracts', [ContractController::class, 'index']);
+		Route::post('/contracts', [ContractController::class, 'store']);
+	});
 });

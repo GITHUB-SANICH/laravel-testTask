@@ -13,4 +13,15 @@ class ContractController extends Controller
 		$contracts = Contract::all();
 		return response()->json($contracts);
 	}
+
+	public function store(Request $request)
+	{
+		$validatedData = $request->validate([
+			'name' => 'required|string|max:255',
+		]);
+
+		$contract = Contract::create($validatedData);
+
+		return response()->json($contract, 201);
+	}
 }

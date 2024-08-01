@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
 	{
-		User::create([
-			'name' => 'Admin User',
-			'email' => 'admin@example.com',
-			'password' => Hash::make('password'),
-			'role' => 'admin',
-		]);
+		//User::create([
+		//	'name' => 'Admin User',
+		//	'email' => 'admin@example.com',
+		//	'password' => Hash::make('password'),
+		//	'role' => 'admin',
+		//]);
 
 		$this->call([
 			ContractSeeder::class,

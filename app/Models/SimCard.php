@@ -16,11 +16,11 @@ class SimCard extends Model
 
 	public function contract()
 	{
-		return $this->belongTo(Contract::class, 'contract_id');
+		return $this->belongTo(Contract::class);
 	}
 
 	public function simCardGroups()
 	{
-		return $this->belongsToMany(SimCardGroup::class, 'sim_card_group_id');
+		return $this->belongsToMany(SimCardGroup::class);
 	}
 }

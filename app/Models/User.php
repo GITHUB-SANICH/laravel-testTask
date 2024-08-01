@@ -45,11 +45,7 @@ class User extends Authenticatable
 
 	public function contract()
 	{
-		return $this->belongTo(Contract::class, 'contract_id');
-	}
-
-	public function isAdmin()
-	{
-		return $this->role === 'admin';
+		return $this->belongTo(Contract::class);
 	}
 }
+

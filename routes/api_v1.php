@@ -17,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('/test', ['SimCardController']);
 Route::middleware('auth:sanctum')->group(function () {
+	//test
+	Route::get('/test', ['SimCardController']);
+
 	// Сим-карты
 	Route::get('/sim-cards', [SimCardController::class, 'index']);
 	Route::get('/sim-cards/{number}', [SimCardController::class, 'searchByNumber']);
@@ -25,6 +29,6 @@ Route::middleware('auth:sanctum')->group(function () {
 	// Контракты
 	Route::middleware('role:admin')->group(function () {
 		Route::get('/contracts', [ContractController::class, 'index']);
-		Route::post('/contracts', [ContractController::class, 'store']);
+		Route::post('/contracts', [ContractController::class, 'store']);   
 	});
 });

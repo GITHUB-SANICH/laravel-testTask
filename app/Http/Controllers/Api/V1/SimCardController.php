@@ -18,6 +18,7 @@ class SimCardController extends Controller
 
 	public function index(Request $request)
 	{
+		return ['проверка-index-test'];
 	}
 
 
@@ -28,11 +29,6 @@ class SimCardController extends Controller
 
 		if ($user->role === 'client') {
 			$query->where('contract_id', $user->contract_id);
-			
-		}
-
-		if ($user->role === 'admin') {
-			$query->get();
 		}
 
 		$simCards = $query->get();

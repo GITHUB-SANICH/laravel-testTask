@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ContractCollection;
 use App\Models\Contract;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ContractController extends Controller
 {
 	public function index()
 	{
-		$contracts = Contract::all();
-		return response()->json($contracts);
+		return new ContractCollection(Cache::remember('contract_list', 60 * 60 * 24, function () {
+			return Contract::all();
+		}));
 	}
 
 	public function store(Request $request)

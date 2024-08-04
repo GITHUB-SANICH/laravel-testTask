@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/test', [SimCardController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
 	//test
 	Route::get('/test', [SimCardController::class, 'index']);
@@ -27,7 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::get('/sim-cards/{number}', [SimCardController::class, 'searchByNumber']);
 
 	// Контракты
-	Route::middleware('role:admin')->group(function () {
+	Route::middleware('admin')->group(function () {
 		Route::get('/contracts', [ContractController::class, 'index']);
 		Route::post('/contracts', [ContractController::class, 'store']);   
 	});

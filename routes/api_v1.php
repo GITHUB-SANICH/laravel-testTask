@@ -23,12 +23,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	// Сим-карты
 	//Route::get('/sim-cards', [SimCardController::class, 'index']);
-	Route::get('/sim-cards/{number?}', [SimCardController::class, 'searchByNumber']);
+	Route::get('/sim-cards/{number}', [SimCardController::class, 'searchByNumber']);
 
 	// Контракты
 	Route::middleware('admin')->group(function () {
 		Route::get('/contracts', [ContractController::class, 'index']);
-		Route::post('/contracts', [ContractController::class, 'store']);
-		Route::get('/cache', [ContractController::class, 'cache']);   
+		Route::post('/contracts', [ContractController::class, 'store']); 
 	});
 });

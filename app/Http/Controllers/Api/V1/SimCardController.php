@@ -28,26 +28,19 @@ class SimCardController extends Controller
 	public function searchByNumber($number)
 	{
 		$user = Auth::user();
-		$query = SimCard::where('number', 'like', "%$number%");
-		//$simCards = SimCard::where('number', 'like', "%$number%");
-		//$newArray[];
-		//foreach ($simCards as $sim) {
-		//	$newArray += $sim->simCardGroups;
-		//}
+		//$query = SimCard::where('number', 'like', "%$number%");
+		$query = SimCard::all()->sortBy('contract_id');
 
-	
 
 		if ($user->role === 'client') {
 			$query->where('contract_id', $user->contract_id);
 
 			//return new SimCardResource($query);
-
 		}
 
-		$simCards = $query->get();
-		return response()->json($simCards);
-		//dd($simCards);
-		//dd($query->simCardGroups->id);
+		//$simCards = $query->get();
+		//return response()->json($simCards);
+		return response()->json($query);
 
 		//return new SimCardCollection($simCards);
 		//return response()->json($simCards);

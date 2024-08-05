@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContractForm;
 use App\Http\Resources\ContractCollection;
 use App\Models\Contract;
 use Illuminate\Http\Request;
@@ -13,18 +14,25 @@ class ContractController extends Controller
 	public function index()
 	{
 		return new ContractCollection(Cache::remember('contract_list', 60 * 60 * 24, function () {
-			return Contract::all();
+			Contract::all();
 		}));
 	}
 
-	public function store(Request $request)
+
+	public function store(ContractForm $request)
 	{
-		$validatedData = $request->validate([
-			'name' => 'required|string|max:255',
-		]);
+		$newContract = Contract::create($request->validated());
+		return response()->json($newContract, 201);
+	}
 
-		$contract = Contract::create($validatedData);
+	public function cache()
+	{
+		$cachedData = Cache::get('contract_list');
 
-		return response()->json($contract, 201);
+		if ($cachedData) {
+			return response()->json(['status' => 'found', 'data' => $cachedData], 200);
+		} else {
+			return response()->json(['status' => 'not found'], 404);
+		}
 	}
 }

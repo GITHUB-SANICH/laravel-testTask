@@ -17,8 +17,8 @@ class SimCardResource extends JsonResource
 		//return parent::toArray($request);
 		return [
 			'sim' => $this->id,
-			'number_phone' => $this->number,
-			'contract' => $this->contract_id
+			'phone_number' => $this->number,
+			'group' => $this->simCardGroups->pluck('id')->first()
 		];
 	}
 }

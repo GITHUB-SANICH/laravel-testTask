@@ -15,9 +15,6 @@ return new class extends Migration
 			$table->id();
 			$table->foreignId('sim_card_id')->constrained()->cascadeOnDelete();
 			$table->foreignId('sim_card_group_id')->constrained()->cascadeOnDelete();
-
-			$table->index('sim_card_id', 'sim_card_sim_card_group_sim_card_fk')->on('sim_cards')->references('id');
-			$table->index('sim_card_group_id', 'sim_card_sim_card_group_sim_card_group_fk')->on('sim_card_groups')->references('id');
 			$table->timestamps();
 		});
 	}

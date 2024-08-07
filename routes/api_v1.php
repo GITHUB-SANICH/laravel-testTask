@@ -18,12 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-	//test
-	Route::get('/test', [SimCardController::class, 'index']);
-
 	// Сим-карты
-	//Route::get('/sim-cards', [SimCardController::class, 'index']);
-	Route::get('/sim-cards/{number}', [SimCardController::class, 'searchByNumber']);
+	Route::get('/sim-cards/{number?}', [SimCardController::class, 'index']);
 
 	// Контракты
 	Route::middleware('admin')->group(function () {

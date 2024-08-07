@@ -21,7 +21,6 @@ class SimCard extends Model
 
 	public function simCardGroups()
 	{
-		//return $this->belongsToMany(SimCardGroup::class);
-		return $this->belongsToMany(SimCardGroup::class, 'sim_card_sim_card_group', 'sim_card_id', 'sim_card_group_id');
+		return $this->belongsToMany(SimCardGroup::class);
 	}
 }

@@ -12,6 +12,7 @@ use App\Http\Resources\SimCardResource;
 class SimCardController extends Controller
 {
 	public function index($number = null)
+	public function index($number = null)
 	{
 		$user = Auth::user();
 		$query = SimCard::where('number', 'like', "%$number%");

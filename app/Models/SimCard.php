@@ -10,6 +10,7 @@ class SimCard extends Model
 {
 	use HasFactory, SoftDeletes;
 
+	protected $table = 'sim_cards';
 	protected $fillable = [
 		'number', 'contract_id',
 	];

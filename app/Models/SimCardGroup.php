@@ -10,6 +10,7 @@ class SimCardGroup extends Model
 {
 	use HasFactory, SoftDeletes;
 
+	protected $table = 'sim_card_groups';
 	protected $fillable = [
 		'name', 'contract_id'
 	];

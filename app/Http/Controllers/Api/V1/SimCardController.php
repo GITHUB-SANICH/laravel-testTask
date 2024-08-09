@@ -7,14 +7,17 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\SimCard;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Resources\SimCardResource;
+use App\Http\Requests\SimCardForm;
+use App\Enums\Role;
 
 
 class SimCardController extends Controller
 {
-	public function index($number = null)
+	public function index(SimCardForm $request)
 	{
 		$user = Auth::user();
-		$query = SimCard::where('number', 'like', "%$number%");
+		$validatedNumber = $request->validated()['number'];
+		$query = SimCard::where('number', 'like', "%$validatedNumber%");
 
 		if ($user->role === 'client') {
 			$simCards = Cache::remember('sim_card_list_for_client', 60 * 60 * 24, function () use ($query, $user) {

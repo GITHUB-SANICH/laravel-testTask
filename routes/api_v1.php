@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
+	//TODO Заметка: Адрес по-которому производится поиск по телефону http://127.0.0.1:8000/api/v1/sim-cards?number=
 	// Сим-карты
-	Route::get('/sim-cards/{number?}', [SimCardController::class, 'index']);
-
+	Route::get('/sim-cards', [SimCardController::class, 'index']);
 	// Контракты
 	Route::middleware('admin')->group(function () {
 		Route::get('/contracts', [ContractController::class, 'index']);

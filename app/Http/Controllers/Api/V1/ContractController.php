@@ -13,13 +13,13 @@ class ContractController extends Controller
 	public function index()
 	{
 		return ContractResource::collection(Cache::remember('contract_list', 60 * 60 * 24, function () {
-			Contract::all();
+			return Contract::all();
 		}));
 	}
 
 	public function store(ContractForm $request)
 	{
 		$newContract = Contract::create($request->validated());
-		return response()->json($newContract, 201);
+		return new ContractResource($newContract, 201);
 	}
 }

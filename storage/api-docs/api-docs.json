@@ -1,0 +1,165 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My Doc API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/": {},
+        "/api/v1/contracts": {
+            "get": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Список контрактов (для админа)",
+                "operationId": "b466fe91cbfed1aa47b77ba4f2582817",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "contract": {
+                                                        "type": "integer",
+                                                        "example": 18
+                                                    },
+                                                    "contract_name": {
+                                                        "type": "string",
+                                                        "example": "name for new created contract"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Создание контракта (для админа)",
+                "operationId": "5fa443a6b37b32da05bbae4755798d7d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "the name for the new contract being created"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "contract": {
+                                            "type": "integer",
+                                            "example": 18
+                                        },
+                                        "contract_name": {
+                                            "type": "string",
+                                            "example": "name for new created contract"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/sim-cards": {
+            "get": {
+                "tags": [
+                    "SimCards"
+                ],
+                "summary": "Список симкарт (для клиентов и админов)",
+                "operationId": "3f749fb08e04e2d7d992ecd0822d67dc",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "description": "Роль пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "client",
+                            "enum": [
+                                "client",
+                                "admin"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "sim": {
+                                            "type": "integer",
+                                            "example": 18
+                                        },
+                                        "phone_number": {
+                                            "type": "string",
+                                            "example": "+7-945-333-21"
+                                        },
+                                        "group": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer",
+                                                "example": 20
+                                            }
+                                        },
+                                        "contract": {
+                                            "type": "integer",
+                                            "example": 14
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Contracts",
+            "description": "Contracts"
+        },
+        {
+            "name": "SimCards",
+            "description": "SimCards"
+        }
+    ]
+}

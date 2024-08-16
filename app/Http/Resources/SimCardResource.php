@@ -24,7 +24,7 @@ class SimCardResource extends JsonResource
 				'group' => $this->simCardGroups->pluck('pivot.sim_card_group_id')->all()
 			];
 		}
-
+		
 		if (Auth::user()->role === 'admin') {
 			return [
 				'sim' => $this->id,

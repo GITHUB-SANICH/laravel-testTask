@@ -1,9 +1,6 @@
 <?php
-
-use App\Models\SimCard;
 use App\Http\Controllers\Api\V1\ContractController;
 use App\Http\Controllers\Api\V1\SimCardController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*

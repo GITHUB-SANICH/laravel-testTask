@@ -15,17 +15,17 @@ class SimCardResource extends JsonResource
 	 */
 	public function toArray(Request $request): array
 	{
-		//return parent::toArray($request);
+		$user = Auth::user()->role;
 
-		if (Auth::user()->role === 'client') {
+		if ($user === 'client') {
 			return [
 				'sim' => $this->id,
 				'phone_number' => $this->number,
 				'group' => $this->simCardGroups->pluck('pivot.sim_card_group_id')->all()
 			];
 		}
-		
-		if (Auth::user()->role === 'admin') {
+
+		if ($user === 'admin') {
 			return [
 				'sim' => $this->id,
 				'phone_number' => $this->number,

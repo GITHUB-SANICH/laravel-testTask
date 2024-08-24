@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
  * 	path="/api/v1/contracts",
  * 	summary="Создание контракта (для админа)",
  * 	tags={"Contracts"},
+ *		security={{"bearerAuth": {}}},
  * 
  * 	@OA\RequestBody(
  * 		@OA\JsonContent(
@@ -34,7 +35,8 @@ use App\Http\Controllers\Controller;
  * 	path="/api/v1/contracts",
  * 	summary="Список контрактов (для админа)",
  * 	tags={"Contracts"},
- * 
+ *		security={{"bearerAuth": {}}},
+ *
  * 	@OA\Response(
  * 		response=200,
  * 		description="Ok",  

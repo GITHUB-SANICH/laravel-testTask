@@ -31,6 +31,7 @@ use App\Http\Controllers\Controller;
  * 	path="/api/v1/sim-cards",
  * 	summary="Список симкарт (для клиентов и админов)",
  * 	tags={"SimCards"},
+ *		security={{"bearerAuth": {}}},
  * 	@OA\Parameter(
  * 		name="role",
  * 		in="query",

@@ -8,8 +8,6 @@ use App\Models\SimCard;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Resources\SimCardResource;
 use App\Http\Requests\SimCardForm;
-use App\Enums\Role;
-
 
 class SimCardController extends Controller
 {
@@ -19,18 +17,29 @@ class SimCardController extends Controller
 		$validatedNumber = $request->validated()['number'];
 		$query = SimCard::where('number', 'like', "%$validatedNumber%");
 
+		// Определяем кешированный ключ
+		$cacheKey = $this->getCacheKey($user->role, $validatedNumber);
+
+		// Очищаем кеш перед обновлением
+		Cache::forget($cacheKey);
+
 		if ($user->role === 'client') {
-			$simCards = Cache::remember('sim_card_list_for_client', 60 * 60 * 24, function () use ($query, $user) {
+			$simCards = Cache::remember($cacheKey, 60 * 60 * 24, function () use ($query, $user) {
 				return $query->where('contract_id', $user->contract_id)->with('simCardGroups')->get()->sortBy('simCardGroups');
 			});
 		}
 
 		if ($user->role === 'admin') {
-			$simCards = Cache::remember('sim_card_list_for_admin', 60 * 60 * 24, function () use ($query) {
+			$simCards = Cache::remember($cacheKey, 60 * 60 * 24, function () use ($query) {
 				return $query->orderBy('contract_id')->get();
 			});
 		}
 
 		return SimCardResource::collection($simCards);
+	}
+
+	private function getCacheKey($role, $number)
+	{
+		return "sim_card_list_for_{$role}_" . md5($number);
 	}
 }

@@ -12,10 +12,21 @@ return new class extends Migration
 	public function up(): void
 	{
 		Schema::create('sim_card_sim_card_group', function (Blueprint $table) {
-			$table->id();
-			$table->foreignId('sim_card_id')->constrained()->cascadeOnDelete();
-			$table->foreignId('sim_card_group_id')->constrained()->cascadeOnDelete();
+			$table->increments('id');
+			$table->integer('sim_card_id')->unsigned();
+			$table->integer('sim_card_group_id')->unsigned();
 			$table->timestamps();
+
+			// Добавляем внешний ключ с каскадным удалением
+			$table->foreign('sim_card_id')
+			->references('id')
+			->on('sim_cards')
+			->onDelete('cascade');
+
+			$table->foreign('sim_card_group_id')
+			->references('id')
+			->on('sim_card_groups')
+			->onDelete('cascade');
 		});
 	}
 
@@ -24,6 +35,12 @@ return new class extends Migration
 	 */
 	public function down(): void
 	{
+		Schema::table('sim_card_sim_card_group', function (Blueprint $table) {
+			// Удаляем внешние ключи перед удалением таблицы
+			$table->dropForeign(['sim_card_id']);
+			$table->dropForeign(['sim_card_group_id']);
+		});
+
 		Schema::dropIfExists('sim_card_sim_card_group');
 	}
 };

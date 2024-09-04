@@ -13,6 +13,7 @@ class SimCardGroup extends Model
 	protected $table = 'sim_card_groups';
 	protected $fillable = [
 		'name',
+		'contract_id',
 	];
 
 	public function contract()

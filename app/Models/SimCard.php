@@ -13,7 +13,6 @@ class SimCard extends Model
 	protected $table = 'sim_cards';
 	protected $fillable = [
 		'number',
-		'contract_id',
 	];
 
 	public function contract()

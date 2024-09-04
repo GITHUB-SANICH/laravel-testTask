@@ -22,6 +22,6 @@ class SimCard extends Model
 
 	public function simCardGroups()
 	{
-		return $this->belongsToMany(SimCardGroup::class);
+		return $this->belongsToMany(SimCardGroup::class)->withTimestamps();
 	}
 }

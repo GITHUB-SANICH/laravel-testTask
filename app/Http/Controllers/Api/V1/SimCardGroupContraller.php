@@ -14,9 +14,6 @@ class SimCardGroupContraller extends Controller
 		$entries = $request->query('entries', 10);
 		$simCardGroups = SimCardGroup::with('simCards')->paginate($entries);
 
-		return response()->json([
-			'current_page' => $simCardGroups->currentPage(),
-			'data' => SimCardGroupResource::collection($simCardGroups),
-		]);
+		return SimCardGroupResource::collection($simCardGroups);
 	}
 }

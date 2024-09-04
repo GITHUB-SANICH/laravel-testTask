@@ -21,7 +21,7 @@ class SimCardGroupResource extends JsonResource
 				return [
 					'simCard_id' => $simCard->id,
 					'number' => $simCard->number,
-					//'added_at' => $simCard->pivot->created_at->format('H.i.d.m.Y'),
+					'time_add_sim' => $simCard->pivot->created_at ? $simCard->pivot->created_at->format('H:i_d.m.Y') : 'No Date',
 				];
 			}),
 		];

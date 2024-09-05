@@ -35,6 +35,14 @@ class SimCardGroupController extends Controller
 		$group = SimCardGroup::findOrFail($groupId);
 		// Получение сим-карты по ID
 		$simCard = SimCard::findOrFail($request->addedSimCardId);
+
+		// Проверка, есть ли сим-карта уже в группе
+		if ($group->simCards()->where('sim_card_id', $simCard->id)->exists()) {
+			return response()->json([
+				'message' => 'Сим-карта уже находится в этой группе.',
+			], 400);
+		}
+
 		// Добавление сим-карты в группу
 		$group->simCards()->attach($simCard);
 
@@ -47,13 +55,16 @@ class SimCardGroupController extends Controller
 
 	public function removeSimCard($groupId, $simCardId)
 	{
-		$simCard = SimCard::where('sim_card_group_id', $groupId)->where('id', $simCardId)->first();
+		// Получение группы по ID
+		$group = SimCardGroup::findOrFail($groupId);
 
-		if (!$simCard) {
-			return response()->json(['error' => 'Sim card not found'], 404);
+		// Проверка, есть ли сим-карта в группе
+		if (!$group->simCards()->where('sim_card_id', $simCardId)->exists()) {
+			return response()->json(['error' => 'Sim card not found in this group'], 404);
 		}
 
-		$simCard->delete();
+		// Удаление сим-карты из группы
+		$group->simCards()->detach($simCardId);
 
 		return response()->json(['message' => 'Sim card removed successfully'], 200);
 	}

@@ -1,7 +1,7 @@
 <?php
 use App\Http\Controllers\Api\V1\ContractController;
 use App\Http\Controllers\Api\V1\SimCardController;
-use App\Http\Controllers\Api\V1\SimCardGroupContraller;
+use App\Http\Controllers\Api\V1\SimCardGroupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +21,11 @@ Route::middleware('auth:sanctum')->group(function () {
 	// Сим-карты
 	Route::get('/sim-cards', [SimCardController::class, 'index']);
 	// Группы
-	Route::get('/sim-card-groups', [SimCardGroupContraller::class, 'index']);
+	Route::get('/sim-card-groups', [SimCardGroupController::class, 'getAllGroups']);
+	Route::get('/sim-card-groups/{groupId}', [SimCardGroupController::class, 'getGroup']);
+	Route::post('/sim-card-groups/{groupId}/sim-cards', [SimCardGroupController::class, 'addSimCard']);
+	Route::delete('/sim-card-groups/{groupId}/sim-cards/{simCardId}', [SimCardGroupController::class, 'removeSimCard']);
+
 	// Контракты
 	Route::middleware('admin')->group(function () {
 		Route::get('/contracts', [ContractController::class, 'index']);

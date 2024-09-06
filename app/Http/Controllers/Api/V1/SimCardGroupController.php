@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\SimCardGroup;
 use App\Models\SimCard;
-use Illuminate\Http\Request;
 use App\Http\Resources\SimCardGroupResource;
-use App\Http\Requests\SimCardGroupForm;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\SimCardGroup\AddSimCardRequest;
+use App\Http\Requests\SimCardGroup\GetAllGroupsRequest;
+use App\Http\Requests\SimCardGroup\StoreSimCardGroupRequest;
 
 class SimCardGroupController extends Controller
 {
-	public function getAllGroups(SimCardGroupForm $request)
+	public function getAllGroups(GetAllGroupsRequest $request)
 	{
 		$entries = $request->query('entries', $request->validated()['entries']);
 		$simCardGroups = SimCardGroup::with('simCards')->paginate($entries);
@@ -29,16 +29,19 @@ class SimCardGroupController extends Controller
 		return new SimCardGroupResource($group);
 	}
 
-	public function addSimCard($groupId, SimCardGroupForm $request)
+	public function addSimCard($groupId, AddSimCardRequest $request)
 	{
 		// Получение группы по ID
 		$group = SimCardGroup::findOrFail($groupId);
 
 		// Получение сим-карты по ID
-		$simCard = SimCard::findOrFail($request->addedSimCardId);
+		//$simCard = SimCard::findOrFail($request->addedSimCard);
+		$simCard = $request->validated()['entries'];
+
 
 		// Проверка, есть ли сим-карта уже в группе
-		if ($group->simCards()->where('sim_card_id', $simCard->id)->exists()) {
+		if ($group->simCards()->where('sim_card_id', $simCard)->exists()) {
+		//if ($group->simCards()->where('sim_card_id', $simCard->id)->exists()) {
 			return response()->json([
 				'message' => 'Сим-карта уже находится в этой группе.',
 			], 400);
@@ -69,12 +72,11 @@ class SimCardGroupController extends Controller
 		return response()->json(['message' => 'Сим-карта успешно удалена из группы'], 200);
 	}
 
-	public function store(SimCardGroupForm $request)
+	public function store(StoreSimCardGroupRequest $request)
 	{
 		// Создание группы сим-карт
-		$group = SimCardGroup::create([
-			'name' => $request->validated()['groupName'] ?? null,
-			'contract_id' => $request->validated()['contract'] ?? null
+		$group = SimCardGroup::create(['name' => $request->validated()['groupName'],
+			'contract_id' => $request->validated()['contract']
 		]);
 
 		return response()->json([

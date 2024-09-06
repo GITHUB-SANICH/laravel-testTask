@@ -11,7 +11,7 @@ class SimCardGroupForm extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+		return true;
     }
 
     /**
@@ -22,7 +22,28 @@ class SimCardGroupForm extends FormRequest
     public function rules(): array
     {
         return [
-            //
+			"entries" => "nullable|integer|min:1|max:100",
+			"addedSimCardId" => 'required|integer|min:1'
         ];
     }
+
+	/**
+	 * Getting default values for attributes.
+	 *
+	 * @return array
+	 */
+	protected function prepareForValidation()
+	{
+		$entries = $this->input('entries');
+
+		if ($entries > 100) {
+			$entries = 100;
+		} elseif (empty($entries) || $entries <= 0) {
+			$entries = 10;
+		}
+
+		$this->merge([
+			'entries' => $entries,
+		]);
+	}
 }

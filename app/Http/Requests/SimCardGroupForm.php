@@ -23,7 +23,9 @@ class SimCardGroupForm extends FormRequest
     {
         return [
 			"entries" => "nullable|integer|min:1|max:100",
-			"addedSimCardId" => 'required|integer|min:1'
+			"addedSimCardId" => 'required|integer|min:1',
+			"groupName" => 'required|string|min:2|max:50',
+			"contract" => 'required|integer|min:1',
         ];
     }
 

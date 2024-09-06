@@ -22,31 +22,11 @@ class SimCardGroupController extends Controller
 
 	public function getGroup($groupId)
 	{
-		// Валидация $groupId
-		$validator = Validator::make(['groupId' => $groupId], [
-			'groupId' => 'required|integer|min:1'
-		]);
+		// Получение группы по ID
+		$group = SimCardGroup::findOrFail($groupId);
 
-		if ($validator->fails()) {
-			return response()->json(['error' => 'Неверный идентификатор группы'], 400);
-		}
-
-		// Получаем максимальное значение ID из таблицы
-		$maxGroupId = SimCardGroup::max('id');
-
-		// Если $groupId больше максимального, заменяем его на максимальное
-		if ($groupId > $maxGroupId) {
-			$groupId = $maxGroupId;
-		}
-
-		$simCardGroup = SimCardGroup::with('simCards')->find($groupId);
-		
-
-		if (!$simCardGroup) {
-			return response()->json(['error' => 'Группа не найдена'], 404);
-		}
-
-		return new SimCardGroupResource($simCardGroup);
+		$group = $group->with('simCards')->find($groupId);
+		return new SimCardGroupResource($group);
 	}
 
 	public function addSimCard($groupId, SimCardGroupForm $request)
@@ -76,7 +56,6 @@ class SimCardGroupController extends Controller
 
 	public function removeSimCard($groupId, $simCardId)
 	{
-		// Получение группы по ID
 		$group = SimCardGroup::findOrFail($groupId);
 
 		// Проверка, есть ли сим-карта в группе
@@ -90,15 +69,13 @@ class SimCardGroupController extends Controller
 		return response()->json(['message' => 'Сим-карта успешно удалена из группы'], 200);
 	}
 
-	public function store(Request $request)
+	public function store(SimCardGroupForm $request)
 	{
-		// Валидация входных данных
-		$validatedData = $request->validate([
-			'name' => 'required|string|max:50',
-		]);
-
 		// Создание группы сим-карт
-		$group = SimCardGroup::create($validatedData);
+		$group = SimCardGroup::create([
+			'name' => $request->validated()['groupName'] ?? null,
+			'contract_id' => $request->validated()['contract'] ?? null
+		]);
 
 		return response()->json([
 			'message' => 'Группа сим-карт успешно создана.',

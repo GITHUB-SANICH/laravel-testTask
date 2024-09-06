@@ -18,11 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
 	//TODO Заметка: Ссылка вывода симок по телефону http://127.0.0.1:8000/api/v1/sim-cards?number=""
 	//TODO Заметка: Ссылка вывода групп по страницам http://127.0.0.1:8000/api/v1/sim-card-groups?entries=""
+	//TODO Заметка: Ссылка создания групп http://127.0.0.1:8000/api/v1/sim-card-groups?groupName=""
 	// Сим-карты
 	Route::get('/sim-cards', [SimCardController::class, 'index']);
 	// Группы
 	Route::get('/sim-card-groups', [SimCardGroupController::class, 'getAllGroups']);
 	Route::get('/sim-card-groups/{groupId}', [SimCardGroupController::class, 'getGroup']);
+	Route::post('/sim-card-groups', [SimCardGroupController::class, 'store']);
 	Route::post('/sim-card-groups/{groupId}/sim-cards', [SimCardGroupController::class, 'addSimCard']);
 	Route::delete('/sim-card-groups/{groupId}/sim-cards/{simCardId}', [SimCardGroupController::class, 'removeSimCard']);
 

@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	//TODO Заметка: Ссылка вывода групп по страницам http://127.0.0.1:8000/api/v1/sim-card-groups?entries=""
 	//TODO Заметка: Ссылка создания групп http://127.0.0.1:8000/api/v1/sim-card-groups?groupName=""
 	// Сим-карты
-	Route::get('/sim-cards', [SimCardController::class, 'index']);
+	Route::get('/sim-cards', [SimCardController::class, 'getAllSimCards']);
 	// Группы
 	Route::get('/sim-card-groups', [SimCardGroupController::class, 'getAllGroups']);
 	Route::get('/sim-card-groups/{groupId}', [SimCardGroupController::class, 'getGroup']);
@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	// Контракты
 	Route::middleware('admin')->group(function () {
-		Route::get('/contracts', [ContractController::class, 'index']);
+		Route::get('/contracts', [ContractController::class, 'getAllContracts']);
 		Route::post('/contracts', [ContractController::class, 'store']); 
 	});
 });

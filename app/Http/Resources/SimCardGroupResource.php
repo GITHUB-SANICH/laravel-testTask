@@ -16,7 +16,7 @@ class SimCardGroupResource extends JsonResource
 		return [
 			'group_id' => $this->id,
 			'group_name' => $this->name,
-			'sim_cards' => $this->simCards->map(function ($simCard) {
+			'sim_cards' => $this->simCards->isEmpty() ? 'В данной группе сим-карт нет' : $this->simCards->map(function ($simCard) {
 				return [
 					'simCard_id' => $simCard->id,
 					'number' => $simCard->number,

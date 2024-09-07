@@ -23,11 +23,12 @@ class AddSimCardRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			//"addedSimCard" => 'required|integer|min:1',
-			"addedSimCard" => 'required',
-			'integer',
-			'min:1',
-			Rule::exists('sim_cards', 'id') // Проверка существования контракта в таблице contracts
+			'addedSimCard' => [
+				'required',
+				'integer',
+				'min:1',
+				Rule::exists('sim_cards', 'id') // Проверка существования сим карты в таблице sim_cards
+			],
 		];
 	}
 }

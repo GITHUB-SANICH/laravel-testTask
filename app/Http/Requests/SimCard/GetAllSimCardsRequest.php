@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\SimCard;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Spatie\FlareClient\Api;
 
-class ContractForm extends FormRequest
+class GetAllSimCardsRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -23,7 +22,19 @@ class ContractForm extends FormRequest
 	public function rules(): array
 	{
 		return [
-			"name" => "required|string|max:255"
+			"number" => "nullable|string|max:20"
 		];
+	}
+
+	/**
+	 * Getting default values for attributes.
+	 *
+	 * @return array
+	 */
+	protected function prepareForValidation()
+	{
+		$this->merge([
+			'number' => $this->input('number') ?: null,
+		]);
 	}
 }

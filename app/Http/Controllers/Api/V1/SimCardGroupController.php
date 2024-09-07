@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\SimCardGroup;
-use App\Models\SimCard;
 use App\Http\Resources\SimCardGroupResource;
 use App\Http\Requests\SimCardGroup\AddSimCardRequest;
 use App\Http\Requests\SimCardGroup\GetAllGroupsRequest;
@@ -14,8 +13,8 @@ class SimCardGroupController extends Controller
 {
 	public function getAllGroups(GetAllGroupsRequest $request)
 	{
-		$entries = $request->query('entries', $request->validated()['entries']);
-		$simCardGroups = SimCardGroup::with('simCards')->paginate($entries);
+		$entriesOnPage = $request->query('entries', $request->validated()['entries']);
+		$simCardGroups = SimCardGroup::with('simCards')->paginate($entriesOnPage);
 
 		return SimCardGroupResource::collection($simCardGroups);
 	}
@@ -35,13 +34,10 @@ class SimCardGroupController extends Controller
 		$group = SimCardGroup::findOrFail($groupId);
 
 		// Получение сим-карты по ID
-		//$simCard = SimCard::findOrFail($request->addedSimCard);
-		$simCard = $request->validated()['entries'];
-
+		$simCard = $request->validated()['addedSimCard'];
 
 		// Проверка, есть ли сим-карта уже в группе
 		if ($group->simCards()->where('sim_card_id', $simCard)->exists()) {
-		//if ($group->simCards()->where('sim_card_id', $simCard->id)->exists()) {
 			return response()->json([
 				'message' => 'Сим-карта уже находится в этой группе.',
 			], 400);
@@ -61,7 +57,6 @@ class SimCardGroupController extends Controller
 	{
 		$group = SimCardGroup::findOrFail($groupId);
 
-		// Проверка, есть ли сим-карта в группе
 		if (!$group->simCards()->where('sim_card_id', $simCardId)->exists()) {
 			return response()->json(['error' => 'Сим-карта не найдена в этой группе'], 404);
 		}
@@ -75,7 +70,8 @@ class SimCardGroupController extends Controller
 	public function store(StoreSimCardGroupRequest $request)
 	{
 		// Создание группы сим-карт
-		$group = SimCardGroup::create(['name' => $request->validated()['groupName'],
+		$group = SimCardGroup::create([
+			'name' => $request->validated()['groupName'],
 			'contract_id' => $request->validated()['contract']
 		]);
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Contract;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SimCardForm extends FormRequest
+class StoreContractRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -22,19 +22,7 @@ class SimCardForm extends FormRequest
 	public function rules(): array
 	{
 		return [
-			"number" => "nullable|string|max:20"
+			"name" => "required|string|max:255"
 		];
-	}
-
-	/**
-	 * Getting default values for attributes.
-	 *
-	 * @return array
-	 */
-	protected function prepareForValidation()
-	{
-		$this->merge([
-			'number' => $this->input('number') ?: null,
-		]);
 	}
 }

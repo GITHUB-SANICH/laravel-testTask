@@ -34,7 +34,7 @@ class StoreSimCardGroupRequest extends FormRequest
 				'required',
 				'integer',
 				'min:1',
-				Rule::exists('contracts', 'id') // Проверка существования контракта в таблице contracts
+				Rule::exists('contracts', 'id')
 			],
 		];
 	}

@@ -75,6 +75,7 @@ class SimCardGroupController extends Controller
 			'contract_id' => $request->validated()['contract']
 		]);
 
+
 		return response()->json([
 			'message' => 'Группа сим-карт успешно создана.',
 			'group' => $group,

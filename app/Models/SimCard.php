@@ -15,6 +15,10 @@ class SimCard extends Model
 		'number',
 	];
 
+	protected $casts = [
+		'contract_id' => 'integer',
+	];
+
 	public function contract()
 	{
 		return $this->belongTo(Contract::class);

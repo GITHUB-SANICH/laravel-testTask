@@ -70,11 +70,10 @@ class SimCardGroupController extends Controller
 	public function store(StoreSimCardGroupRequest $request)
 	{
 		// Создание группы сим-карт
-		$group = SimCardGroup::create([
-			'name' => $request->validated()['groupName'],
-			'contract_id' => $request->validated()['contract']
-		]);
-
+		$group = new SimCardGroup();
+		$group->name = $request->validated()['groupName'];
+		$group->contract_id = $request->validated()['contract'];
+		$group->save();
 
 		return response()->json([
 			'message' => 'Группа сим-карт успешно создана.',

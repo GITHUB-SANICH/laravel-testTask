@@ -4,16 +4,17 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\SimCardGroup;
-use App\Http\Resources\SimCardGroupResource;
-use App\Http\Requests\SimCardGroup\AddSimCardRequest;
-use App\Http\Requests\SimCardGroup\GetAllGroupsRequest;
-use App\Http\Requests\SimCardGroup\StoreSimCardGroupRequest;
+use App\Http\Resources\Api\V1\SimCardGroupResource;
+
+use App\Http\Requests\Api\V1\SimCardGroup\AddSimCardRequest;
+use App\Http\Requests\Api\V1\SimCardGroup\GetAllGroupsRequest;
+use App\Http\Requests\Api\V1\SimCardGroup\StoreSimCardGroupRequest;
 
 class SimCardGroupController extends Controller
 {
 	public function getAllGroups(GetAllGroupsRequest $request)
 	{
-		$entriesOnPage = $request->query('entries', $request->validated()['entries']);
+		$entriesOnPage = $request->query('entries', $request->validated());
 		$simCardGroups = SimCardGroup::with('simCards')->paginate($entriesOnPage);
 
 		return SimCardGroupResource::collection($simCardGroups);
@@ -22,7 +23,12 @@ class SimCardGroupController extends Controller
 	public function getGroup($groupId)
 	{
 		// Получение группы по ID
-		$group = SimCardGroup::findOrFail($groupId);
+		$group = SimCardGroup::find($groupId);
+		if (!$group) {
+			return response()->json([
+				'message' => 'Группа сим-карт не найдена.',
+			], 404);
+		}
 
 		$group = $group->with('simCards')->find($groupId);
 		return new SimCardGroupResource($group);
@@ -31,7 +37,12 @@ class SimCardGroupController extends Controller
 	public function addSimCard($groupId, AddSimCardRequest $request)
 	{
 		// Получение группы по ID
-		$group = SimCardGroup::findOrFail($groupId);
+		$group = SimCardGroup::find($groupId);
+		if (!$group) {
+			return response()->json([
+				'message' => 'Группа сим-карт не найдена.',
+			], 404);
+		}
 
 		// Получение сим-карты по ID
 		$simCard = $request->validated()['addedSimCard'];
@@ -55,7 +66,13 @@ class SimCardGroupController extends Controller
 
 	public function removeSimCard($groupId, $simCardId)
 	{
-		$group = SimCardGroup::findOrFail($groupId);
+		// Получение группы по ID
+		$group = SimCardGroup::find($groupId);
+		if (!$group) {
+			return response()->json([
+				'message' => 'Группа сим-карт не найдена.',
+			], 404);
+		}
 
 		if (!$group->simCards()->where('sim_card_id', $simCardId)->exists()) {
 			return response()->json(['error' => 'Сим-карта не найдена в этой группе'], 404);
@@ -79,5 +96,22 @@ class SimCardGroupController extends Controller
 			'message' => 'Группа сим-карт успешно создана.',
 			'group' => $group,
 		], 201);
+	}
+
+	public function destroy($groupId)
+	{
+		$group = SimCardGroup::find($groupId);
+		if (!$group) {
+			return response()->json([
+				'message' => 'Группа сим-карт не найдена.',
+			], 404);
+		}
+
+		// Удаление группы
+		$group->delete();
+
+		return response()->json([
+			'message' => 'Группа сим-карт успешно удалена.',
+		], 200);
 	}
 }

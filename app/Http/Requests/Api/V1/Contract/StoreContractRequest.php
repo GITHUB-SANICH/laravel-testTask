@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\SimCardGroup;
+namespace App\Http\Requests\Api\V1\Contract;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AddSimCardRequest extends FormRequest
+class StoreContractRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -23,11 +23,12 @@ class AddSimCardRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'addedSimCard' => [
+			'contractName' => [
 				'required',
-				'integer',
-				'min:1',
-				Rule::exists('sim_cards', 'id') // Проверка существования сим карты в таблице sim_cards
+				'string',
+				'min:2',
+				'max:255',
+				Rule::unique('contracts', 'name')
 			],
 		];
 	}

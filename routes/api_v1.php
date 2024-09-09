@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::post('/sim-card-groups', [SimCardGroupController::class, 'store']);
 	Route::post('/sim-card-groups/{groupId}/sim-cards', [SimCardGroupController::class, 'addSimCard']);
 	Route::delete('/sim-card-groups/{groupId}/sim-cards/{simCardId}', [SimCardGroupController::class, 'removeSimCard']);
+	Route::delete('/sim-card-groups/{groupId}', [SimCardGroupController::class, 'destroy']);
 
 	// Контракты
 	Route::middleware('admin')->group(function () {

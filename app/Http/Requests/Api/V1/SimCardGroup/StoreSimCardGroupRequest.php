@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\SimCardGroup;
+namespace App\Http\Requests\Api\V1\SimCardGroup;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SimCardGroupResource extends JsonResource
 {
+	public static $wrap = '';
 	/**
 	 * Transform the resource into an array.
 	 *

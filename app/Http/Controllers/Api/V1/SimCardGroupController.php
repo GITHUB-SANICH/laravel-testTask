@@ -14,6 +14,7 @@ class SimCardGroupController extends Controller
 {
 	public function getAllGroups(GetAllGroupsRequest $request)
 	{
+		
 		$entriesOnPage = $request->query('entries', $request->validated());
 		$simCardGroups = SimCardGroup::with('simCards')->paginate($entriesOnPage);
 
@@ -89,7 +90,8 @@ class SimCardGroupController extends Controller
 		// Создание группы сим-карт
 		$group = new SimCardGroup();
 		$group->name = $request->validated()['groupName'];
-		$group->contract_id = $request->validated()['contract'];
+		//$group->contract_id = $request->validated()['contract'];
+		$group->contract()->associate($request->validated()['contract']);
 		$group->save();
 
 		return response()->json([
